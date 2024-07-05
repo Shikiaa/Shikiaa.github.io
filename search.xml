@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>C/C++中的指针与引用</title>
+      <link href="/posts/8bb1d77d.html"/>
+      <url>/posts/8bb1d77d.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="指针"><a class="markdownIt-Anchor" href="#指针">#</a> 指针</h1><p>指针作为 C 语言的重要特性，很有意思</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> print(x) std::cout&lt;&lt;x&lt;&lt;std::endl</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line"><span class="type">int</span> a = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">print</span>(&amp;a);<span class="comment">//&amp;为取地址符</span></span><br><span class="line"><span class="type">int</span>* b = &amp;a;<span class="comment">//b为指针变量存的是a的地址</span></span><br><span class="line"><span class="built_in">print</span>(b);</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(++*b);<span class="comment">//*可以解引用，就是逆向使用指针变量，直白点就是取数 然后加1</span></span><br><span class="line"><span class="built_in">print</span>(a);<span class="comment">//此时a的值也变成6，通过地址修改了它的值</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span>** c = &amp;b;</span><br><span class="line"><span class="built_in">print</span>(c);</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> d[<span class="number">3</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(d);<span class="comment">//首地址</span></span><br><span class="line"><span class="built_in">print</span>(&amp;d);<span class="comment">//首地址</span></span><br><span class="line"><span class="built_in">print</span>(&amp;d[<span class="number">0</span>]);<span class="comment">//首地址</span></span><br><span class="line"></span><br><span class="line">std::string f = <span class="string">&quot;abcdf&quot;</span>;</span><br><span class="line"><span class="built_in">print</span>(f);<span class="comment">//首地址</span></span><br><span class="line"><span class="built_in">print</span>(&amp;f);<span class="comment">//首地址</span></span><br><span class="line"><span class="built_in">print</span>(&amp;f[<span class="number">1</span>]);<span class="comment">//bcdf</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%x&quot;</span>, &amp;f[<span class="number">1</span>]);<span class="comment">//C++对操作符&lt;&lt;重载过，遇到字符型指针会输出字符本身，回归C语言就可以输出它的地址了</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> g[<span class="number">3</span>][<span class="number">3</span>] = &#123; <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span> &#125;;</span><br><span class="line"><span class="built_in">print</span>(g);<span class="comment">//首地址</span></span><br><span class="line"><span class="built_in">print</span>(&amp;g);<span class="comment">//首地址</span></span><br><span class="line"><span class="built_in">print</span>(&amp;g[<span class="number">0</span>][<span class="number">1</span>]);<span class="comment">//[0][1]处的地址</span></span><br><span class="line">   </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><p><strong>归根结底就一句话，指针就是存放地址的变量。</strong></p><p><strong>既然是变量，指针变量也有自己的地址，如上例中的指针 b，其本身地址存放在指针 c 中，本身又存着 a 变量的地址</strong>。</p><h1 id="引用"><a class="markdownIt-Anchor" href="#引用">#</a> 引用</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//reference 引用</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> print(x) std::cout&lt;&lt;x&lt;&lt;std::endl</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">increase</span><span class="params">(<span class="type">int</span>&amp; value)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">value++;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a=<span class="number">10</span>,c=<span class="number">0</span>;</span><br><span class="line"><span class="type">int</span>&amp; ref = a;<span class="comment">//a地址给引用</span></span><br><span class="line"><span class="built_in">print</span>(a); <span class="comment">//打印a出来</span></span><br><span class="line">ref = c;  <span class="comment">//c的值给引用，此时a值也变为c的值</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">increase</span>(c); <span class="comment">//c值传回去不顶用啊，ref存的是a的地址</span></span><br><span class="line"><span class="built_in">print</span>(a);    <span class="comment">//打印a值为零</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>引用是一种简化的指针，看注释就可以明白咯</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> C/C++ </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 指针 </tag>
+            
+            <tag> C/C++语言基础 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>2024年夏软件小学期</title>
       <link href="/posts/0.html"/>
       <url>/posts/0.html</url>
